@@ -29,7 +29,6 @@ jobs:
 
       - name: Run weekly survey
         env:
-          SURVEY_DATE: "2026-05-17"   # override: report for May 11-17; remove after this run
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           # Uncomment if you switch providers:
           # OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

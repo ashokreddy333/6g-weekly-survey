@@ -7,7 +7,7 @@ arxiv:
     - cs.NI       # Networking and Internet Architecture
     - cs.LG       # Machine Learning (filtered later by topic keywords)
     - eess.SY     # Systems and Control
-  lookback_days: 14
+  lookback_days: 7
   max_results_per_category: 200
 
 ieee_xplore:
