@@ -47,7 +47,9 @@ def _load_yaml(name: str) -> dict:
 
 def _week_label() -> tuple[str, str]:
     """Returns (human_label, slug) e.g. ('May 12 - May 18, 2026', '2026-05-18')."""
-    today = date.today()
+    import os
+    override = os.environ.get("SURVEY_DATE")
+    today = date.fromisoformat(override) if override else date.today()
     monday = today - timedelta(days=today.weekday())
     sunday = monday + timedelta(days=6)
     label = f"{monday.strftime('%b %d')} - {sunday.strftime('%b %d, %Y')}"
