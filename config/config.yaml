@@ -1,0 +1,30 @@
+# Top-level orchestration config. Change provider/model here to swap LLMs.
+
+llm:
+  # provider: anthropic | openai | google
+  provider: anthropic
+  # Leave empty to use the default for the chosen provider.
+  # Anthropic default: claude-sonnet-4-5
+  # OpenAI default:    gpt-4o-mini
+  # Google default:    gemini-2.0-flash
+  model: ""
+  # Parallel LLM calls. Be conservative if you're on a low rate-limit tier.
+  max_workers: 4
+
+filter:
+  # Maximum papers per weekly report.
+  max_items: 18
+  # Minimum relevance score (sum of topic weights * source multiplier).
+  # 0.5 = at least one topic with weight 0.5 must hit.
+  min_score: 0.5
+
+paths:
+  # SQLite seen-store, lives inside the repo and is committed back so the
+  # state survives across GitHub Actions runs.
+  seen_db: "data/seen.sqlite"
+  # PDF output path (will be created if missing).
+  pdf_output: "data/reports/6g_weekly_{week}.pdf"
+
+email:
+  # Format: anything Python's datetime.strftime understands.
+  subject_template: "6G Weekly Survey - {week}"

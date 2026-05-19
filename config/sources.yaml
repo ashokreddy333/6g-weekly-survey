@@ -1,0 +1,109 @@
+arxiv:
+  enabled: true
+  # arXiv categories most relevant to 6G/wireless research.
+  categories:
+    - cs.IT       # Information Theory
+    - eess.SP     # Signal Processing
+    - cs.NI       # Networking and Internet Architecture
+    - cs.LG       # Machine Learning (filtered later by topic keywords)
+    - eess.SY     # Systems and Control
+  lookback_days: 7
+  max_results_per_category: 200
+
+ieee_xplore:
+  enabled: false   # set to true once your API key is approved
+  queries:
+    - "6G AND (air interface OR PHY)"
+    - "integrated sensing and communication"
+    - "non-terrestrial network"
+    - "semantic communication"
+    - "GAN channel model"
+  lookback_days: 7
+  max_results_per_query: 50
+
+# --- Generic RSS feeds (publishers, research portals, ETSI, 3GPP news) ---
+rss_feeds:
+  enabled: true
+  feeds:
+    - name: "ETSI News"
+      url: "https://www.etsi.org/newsroom/news/rss"
+    - name: "3GPP News"
+      url: "https://www.3gpp.org/news-events/feed"
+    # Add more as you find them, e.g. IEEE ComSoc CTN, NGMN, etc.
+
+# --- Vendor blogs and white papers ---
+# Two extraction modes:
+#   * mode: "rss"   -> standard RSS/Atom feed, parsed with feedparser.
+#   * mode: "html"  -> scrape a listing page; supply CSS selectors so the
+#                      fetcher knows how to pull article cards out.
+# Topic filter is applied later, so it's fine that these feeds are not
+# 6G-only -- the relevance filter will drop unrelated posts.
+vendor_sources:
+  enabled: true
+  sources:
+    # Qualcomm OnQ blog is JavaScript-rendered (React SPA) -- RSS feed removed.
+    # Replaced with Samsung Newsroom RSS which covers similar 6G/wireless topics.
+    - name: "Samsung Newsroom"
+      mode: "rss"
+      url: "https://news.samsung.com/global/feed"
+
+    # Ericsson.com blocks scrapers with Cloudflare (403). Replaced with their
+    # publicly accessible Technology Review listing on a partner mirror.
+    # NGMN (Next Generation Mobile Networks) publishes 6G white papers & reports.
+    - name: "NGMN Publications"
+      mode: "html"
+      url: "https://www.ngmn.org/publications.html"
+      # NGMN publishes monthly -- widen window so recent reports aren't missed.
+      lookback_days: 180
+      # Each publication card sits inside a .slide-content div.
+      item_selector: ".slide-content"
+      title_selector: "h2, h3, .slide-entry-title, a"
+      link_selector: "a"
+      date_selector: ".slide-meta"
+
+    # Nokia Tech Explained / Newsroom articles.
+    # Verified selectors 2026-05-19: cards are <a class="pp-cards__card">.
+    - name: "Nokia Blog"
+      mode: "html"
+      url: "https://www.nokia.com/about-us/newsroom/articles/"
+      item_selector: "a.pp-cards__card"
+      title_selector: ".pp-cards__title"
+      link_selector: "a"
+      date_selector: ""   # no date element on listing page; fetcher stamps as "now"
+
+    # Huawei Research journal issues.
+    # Verified selectors 2026-05-19: each issue is a .col-xs-6.list-item card.
+    # The news page (huawei.com/en/news) is JS-rendered; publications page is static.
+    - name: "Huawei Research"
+      mode: "html"
+      url: "https://www.huawei.com/en/publications/huawei-research"
+      # Huawei Research is a quarterly journal -- widen window to catch recent issues.
+      lookback_days: 365
+      item_selector: ".col-xs-6.list-item"
+      title_selector: ".title"
+      link_selector: "a"
+      date_selector: ".date"
+
+    # MediaTek tech blog.
+    - name: "MediaTek Blog"
+      mode: "html"
+      url: "https://www.mediatek.com/blog"
+      item_selector: "article, .blog-item, .card"
+      title_selector: "h2, h3, .blog-title"
+      link_selector: "a"
+      date_selector: "time, .date, .blog-date"
+
+  # Vendors post less often than arXiv -- widen the window.
+  lookback_days: 14
+
+scholar_alerts:
+  enabled: false
+  imap_host: "imap.gmail.com"
+  imap_port: 993
+  mailbox_label: "scholar-alerts"
+
+threegpp:
+  enabled: false
+  watch_pages:
+    - "https://www.3gpp.org/specifications-technologies/releases/release-19"
+    - "https://www.3gpp.org/specifications-technologies/releases/release-20"

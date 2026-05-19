@@ -1,0 +1,12 @@
+# Core dependencies
+requests>=2.31
+feedparser>=6.0
+beautifulsoup4>=4.12
+python-dateutil>=2.8
+PyYAML>=6.0
+reportlab>=3.6,<4.0  # 4.x uses md5(usedforsecurity=False) which requires Python 3.9+
+
+# LLM SDK -- install only the one you'll use. Anthropic is default.
+anthropic>=0.40
+# openai>=1.50
+# google-genai>=0.5

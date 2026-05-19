@@ -1,0 +1,61 @@
+name: Weekly 6G Survey
+
+on:
+  schedule:
+    # Mondays 03:00 UTC = 08:30 IST. Tune as desired (cron is UTC).
+    - cron: '0 3 * * 1'
+  workflow_dispatch:   # manual trigger button in the Actions UI
+
+jobs:
+  run-survey:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # needed to commit the updated seen-store back
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run weekly survey
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Uncomment if you switch providers:
+          # OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: python -m src.main
+
+      - name: Commit updated seen-store
+        # Only run if the survey succeeded (default behavior of `if: success()`).
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/seen.sqlite data/reports/ || true
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "weekly survey: update seen-store and reports [skip ci]"
+            git push
+          fi
+
+      - name: Upload report PDF as workflow artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-report
+          path: data/reports/*.pdf
+          if-no-files-found: ignore
+          retention-days: 90

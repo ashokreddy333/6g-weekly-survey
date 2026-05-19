@@ -1,0 +1,74 @@
+# Weights influence relevance scoring. Higher = more important to surface.
+# Keywords are matched case-insensitively against title + abstract.
+topics:
+  - name: AI-native air interface
+    weight: 1.0
+    keywords:
+      - "AI-native"
+      - "AI native air interface"
+      - "neural receiver"
+      - "learned PHY"
+      - "end-to-end learning"
+      - "autoencoder air interface"
+
+  - name: ISAC (sensing + communication)
+    weight: 1.0
+    keywords:
+      - "ISAC"
+      - "integrated sensing and communication"
+      - "joint sensing communication"
+      - "JCAS"
+      - "radar communication"
+      - "dual-function radar"
+
+  - name: NTN / satellite
+    weight: 1.0
+    keywords:
+      - "NTN"
+      - "non-terrestrial network"
+      - "LEO satellite"
+      - "satellite 5G"
+      - "satellite 6G"
+      - "D2C"
+      - "direct-to-cell"
+      - "3GPP NTN"
+
+  - name: Semantic communication
+    weight: 1.0
+    keywords:
+      - "semantic communication"
+      - "semantic coding"
+      - "task-oriented communication"
+      - "goal-oriented communication"
+      - "semantic information theory"
+
+  - name: Gen AI based Channel Modeling
+    weight: 1.0
+    keywords:
+      - "generative AI channel"
+      - "generative channel model"
+      - "GAN channel"
+      - "diffusion model channel"
+      - "VAE channel"
+      - "foundation model channel"
+      - "large language model channel"
+      - "neural channel model"
+      - "AI-generated channel"
+      - "channel modeling"
+      - "ray tracing channel"
+      - "stochastic channel model"
+
+  - name: 6G Physical Layer
+    weight: 0.9
+    keywords:
+      - "6G physical layer"
+      - "6G PHY"
+      - "6G waveform"
+      - "AFDM"
+      - "OTFS"
+      - "delay-Doppler"
+      - "sub-THz"
+      - "terahertz communication"
+      - "massive MIMO 6G"
+      - "CSI compression"
+      - "beam management"
