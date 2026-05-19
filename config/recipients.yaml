@@ -1,11 +1,23 @@
 recipients:
   - name: "Ashok"
-    email: "REPLACE_WITH_YOUR_EMAIL@samsung.com"
+    email: "ashok.chavva@samsung.com"
+  - name: "Ashok"
+    email: "ashokreddy333@gmail.com"  
+  - name: "Sripada"
+    email: "sripada.k@samsung.com"
+  - name: "Anusha"
+    email: "anusha.g@samsung.com"
+  - name: "Shubham"
+    email: "sk.khunteta@samsung.com"
+  - name: "Ratnakar"
+    email: "ratnakar.rv@samsung.com"
+  - name: "Anshuman"
+    email: "anshun@samsung.com"
   # Add more team members like this:
   # - name: "Colleague Name"
   #   email: "colleague@samsung.com"
 
 sender:
   # The Gmail address that will send the report (must match the app password).
-  email: "REPLACE_WITH_GMAIL_ADDRESS@gmail.com"
+  email: "ashok.samsung.iisc@gmail.com"
   display_name: "6G Weekly Survey Bot"
