@@ -8,7 +8,7 @@ arxiv:
     - cs.LG       # Machine Learning (filtered later by topic keywords)
     - eess.SY     # Systems and Control
   lookback_days: 7
-  max_results_per_category: 200
+  max_results_per_category: 100
 
 ieee_xplore:
   enabled: false   # set to true once your API key is approved
