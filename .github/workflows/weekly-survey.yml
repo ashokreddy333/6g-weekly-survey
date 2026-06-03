@@ -2,8 +2,8 @@ name: Weekly 6G Survey
 
 on:
   schedule:
-    # Mondays 03:00 UTC = 08:30 IST. Tune as desired (cron is UTC).
-    - cron: '0 3 * * 1'
+    # Mondays 04:17 UTC = 09:47 IST. Off-the-hour timing reduces 429s from arXiv.
+    - cron: '17 4 * * 1'
   workflow_dispatch:   # manual trigger button in the Actions UI
 
 jobs:
