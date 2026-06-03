@@ -31,6 +31,46 @@ logger = logging.getLogger(__name__)
 
 ARXIV_API = "http://export.arxiv.org/api/query"
 
+# arXiv API politeness:
+#   - Min spacing between requests: 3 seconds (arXiv asks for this).
+#   - On 429 / 5xx, back off and retry.
+# We use 5 seconds in practice -- safer on shared CI IPs (GitHub Actions
+# runners often share IP pools that arXiv may already rate-limit).
+INTER_REQUEST_DELAY = 5
+MAX_RETRIES = 5
+INITIAL_BACKOFF = 30  # seconds; doubles each retry
+
+
+def _get_with_retry(url: str, params: dict, headers: dict):
+    """GET that retries on 429/5xx with exponential backoff. Returns response or None."""
+    backoff = INITIAL_BACKOFF
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            resp = requests.get(url, params=params, headers=headers, timeout=60)
+            if resp.status_code == 200:
+                return resp
+            if resp.status_code in (429, 500, 502, 503, 504):
+                # Honor Retry-After if arXiv sent one, else use our backoff.
+                retry_after = resp.headers.get("Retry-After")
+                wait = int(retry_after) if retry_after and retry_after.isdigit() else backoff
+                logger.warning(
+                    "arXiv returned %d on attempt %d/%d; waiting %ds before retry",
+                    resp.status_code, attempt, MAX_RETRIES, wait,
+                )
+                time.sleep(wait)
+                backoff *= 2
+                continue
+            # Other 4xx: not worth retrying
+            logger.error("arXiv returned %d, not retrying: %s",
+                         resp.status_code, resp.text[:200])
+            return None
+        except requests.RequestException as e:
+            logger.warning("arXiv request error on attempt %d/%d: %s",
+                           attempt, MAX_RETRIES, e)
+            time.sleep(backoff)
+            backoff *= 2
+    return None
+
 
 def _build_query(categories: list[str], start: int, max_results: int) -> dict:
     cat_query = "+OR+".join(f"cat:{c}" for c in categories)
@@ -86,10 +126,11 @@ def fetch(config: dict) -> list[dict]:
     for cat in categories:
         params = _build_query([cat], start=0, max_results=max_per_cat)
         logger.info("Fetching arXiv category %s (last %d days)", cat, lookback_days)
-        # arXiv asks for 3-second spacing between requests.
         headers = {"User-Agent": "6g-weekly-survey/0.1 (research literature agent)"}
-        resp = requests.get(ARXIV_API, params=params, headers=headers, timeout=30)
-        resp.raise_for_status()
+        resp = _get_with_retry(ARXIV_API, params, headers)
+        if resp is None:
+            logger.warning("Skipping category %s after repeated failures", cat)
+            continue
         feed = feedparser.parse(resp.content)
 
         kept = 0
@@ -103,7 +144,7 @@ def fetch(config: dict) -> list[dict]:
             results.append(parsed)
             kept += 1
         logger.info("  %d papers in window for %s", kept, cat)
-        time.sleep(3)
+        time.sleep(INTER_REQUEST_DELAY)
 
     logger.info("arXiv total: %d papers", len(results))
     return results
