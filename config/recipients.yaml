@@ -13,6 +13,11 @@ recipients:
     email: "ratnakar.rv@samsung.com"
   - name: "Anshuman"
     email: "anshun@samsung.com"
+  - name: "Younghan"
+    email: "younghan.n@samsung.com"
+  - name: "Min JANG"
+    email: "mn.jang@samsung.com"
+    
   # Add more team members like this:
   # - name: "Colleague Name"
   #   email: "colleague@samsung.com"
