@@ -1,6 +1,16 @@
 # Weights influence relevance scoring. Higher = more important to surface.
 # Keywords are matched case-insensitively against title + abstract.
+#
+# A note on the section labels: the agent groups items in the report by the
+# first matched topic. To get a dedicated "Demos & Trials" section, items
+# that hit "implementation demos" / "field trial" keywords should match the
+# 6G Demos & Trials topic FIRST. This is handled in src/filter.py via
+# PRIORITY_TOPICS, so the order in this file does NOT need to put demos
+# first; we list them last for readability.
 topics:
+
+  # ---------- Layer 1 (original focus) ----------
+
   - name: AI-native air interface
     weight: 1.0
     keywords:
@@ -22,7 +32,7 @@ topics:
       - "dual-function radar"
 
   - name: NTN / satellite
-    weight: 1.0
+    weight: 0.9
     keywords:
       - "NTN"
       - "non-terrestrial network"
@@ -42,33 +52,141 @@ topics:
       - "goal-oriented communication"
       - "semantic information theory"
 
-  - name: Gen AI based Channel Modeling
-    weight: 1.0
+  - name: Channel modeling / GAN-based
+    weight: 0.9
     keywords:
-      - "generative AI channel"
-      - "generative channel model"
       - "GAN channel"
-      - "diffusion model channel"
-      - "VAE channel"
-      - "foundation model channel"
-      - "large language model channel"
-      - "neural channel model"
-      - "AI-generated channel"
+      - "generative channel model"
       - "channel modeling"
       - "ray tracing channel"
       - "stochastic channel model"
+      - "diffusion channel"
 
   - name: 6G Physical Layer
-    weight: 0.9
+    weight: 1.0
     keywords:
       - "6G physical layer"
       - "6G PHY"
       - "6G waveform"
-      - "AFDM"
-      - "OTFS"
+      - "6G channel coding"
       - "delay-Doppler"
-      - "sub-THz"
-      - "terahertz communication"
+      - "FR3"
+      - "Advanced Power Amplifier"
+      - "6G Sensing"
+      - "6G CSI"
+      - "UL D-MIMO"
+      - "6G UL MIMO"
       - "massive MIMO 6G"
-      - "CSI compression"
       - "beam management"
+
+  # ---------- Higher layers & network ----------
+
+  - name: Layer 2/3 (MAC, RLC, scheduling, RRC)
+    weight: 0.9
+    keywords:
+      - "MAC scheduler"
+      - "MAC scheduling"
+      - "RLC"
+      - "RRC"
+      - "HARQ"
+      - "DRX"
+      - "QoS scheduling"
+      - "URLLC scheduler"
+      - "link adaptation"
+      - "PDCP"
+
+  - name: Core network & 6G core
+    weight: 0.9
+    keywords:
+      - "5G core"
+      - "5GC"
+      - "6G core"
+      - "service-based architecture"
+      - "SBA"
+      - "AMF"
+      - "SMF"
+      - "UPF"
+      - "network slicing"
+      - "cloud-native core"
+
+  - name: Network automation & AIOps
+    weight: 0.9
+    keywords:
+      - "AIOps"
+      - "intent-based networking"
+      - "self-organizing network"
+      - "SON"
+      - "network automation"
+      - "ML for RAN"
+      - "ML-based RAN"
+      - "closed-loop automation"
+      - "RIC"
+      - "rApp"
+      - "xApp"
+      - "Near-RT RIC"
+      - "Non-RT RIC"
+
+  - name: Energy efficiency & sustainability
+    weight: 0.9
+    keywords:
+      - "energy efficiency"
+      - "green 6G"
+      - "energy harvesting"
+      - "power saving"
+      - "sleep mode base station"
+      - "sustainable wireless"
+      - "carbon footprint network"
+      - "joules per bit"
+
+  # ---------- Ecosystem ----------
+
+  - name: Verticals & use cases (XR, digital twins, IIoT)
+    weight: 0.85
+    keywords:
+      - "XR"
+      - "extended reality"
+      - "metaverse"
+      - "digital twin"
+      - "industrial IoT"
+      - "IIoT"
+      - "factory automation 5G"
+      - "factory automation 6G"
+      - "haptic communication"
+      - "tactile internet"
+      - "immersive communication"
+
+  - name: Spectrum & regulation
+    weight: 0.8
+    keywords:
+      - "spectrum allocation"
+      - "spectrum sharing"
+      - "WRC-27"
+      - "IMT-2030 spectrum"
+      - "sub-THz spectrum"
+      - "FR3"
+      - "upper midband"
+      - "dynamic spectrum"
+      - "cognitive radio"
+
+  # ---------- Demos, Trials & Prototypes ----------
+  # Items matching this topic are routed to a dedicated section by
+  # PRIORITY_TOPICS in src/filter.py, even when they also match another topic.
+
+  - name: 6G Demos & Trials
+    weight: 1.0
+    keywords:
+      - "field trial"
+      - "proof of concept"
+      - "PoC demonstration"
+      - "testbed"
+      - "prototype"
+      - "6G prototype"
+      - "hardware demonstration"
+      - "SDR implementation"
+      - "FPGA implementation"
+      - "live demo"
+      - "real-time demonstration"
+      - "over-the-air demonstration"
+      - "OTA test"
+      - "lab trial"
+      - "commercial pilot"
