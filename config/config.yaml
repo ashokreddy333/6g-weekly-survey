@@ -13,7 +13,7 @@ llm:
 
 filter:
   # Maximum papers per weekly report.
-  max_items: 18
+  max_items: 24
   # Minimum relevance score (sum of topic weights * source multiplier).
   # 0.5 = at least one topic with weight 0.5 must hit.
   min_score: 0.5
