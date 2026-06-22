@@ -44,7 +44,7 @@ topics:
       - "3GPP NTN"
 
   - name: Semantic communication
-    weight: 1.0
+    weight: 0.9
     keywords:
       - "semantic communication"
       - "semantic coding"
@@ -81,62 +81,6 @@ topics:
 
   # ---------- Higher layers & network ----------
 
-  - name: Layer 2/3 (MAC, RLC, scheduling, RRC)
-    weight: 0.9
-    keywords:
-      - "MAC scheduler"
-      - "MAC scheduling"
-      - "RLC"
-      - "RRC"
-      - "HARQ"
-      - "DRX"
-      - "QoS scheduling"
-      - "URLLC scheduler"
-      - "link adaptation"
-      - "PDCP"
-
-  - name: Core network & 6G core
-    weight: 0.9
-    keywords:
-      - "5G core"
-      - "5GC"
-      - "6G core"
-      - "service-based architecture"
-      - "SBA"
-      - "AMF"
-      - "SMF"
-      - "UPF"
-      - "network slicing"
-      - "cloud-native core"
-
-  - name: Network automation & AIOps
-    weight: 0.9
-    keywords:
-      - "AIOps"
-      - "intent-based networking"
-      - "self-organizing network"
-      - "SON"
-      - "network automation"
-      - "ML for RAN"
-      - "ML-based RAN"
-      - "closed-loop automation"
-      - "RIC"
-      - "rApp"
-      - "xApp"
-      - "Near-RT RIC"
-      - "Non-RT RIC"
-
-  - name: Energy efficiency & sustainability
-    weight: 0.9
-    keywords:
-      - "energy efficiency"
-      - "green 6G"
-      - "energy harvesting"
-      - "power saving"
-      - "sleep mode base station"
-      - "sustainable wireless"
-      - "carbon footprint network"
-      - "joules per bit"
 
   # ---------- Ecosystem ----------
 
