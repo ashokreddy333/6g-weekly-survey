@@ -13,10 +13,10 @@ llm:
 
 filter:
   # Maximum papers per weekly report.
-  max_items: 24
+  max_items: 15
   # Minimum relevance score (sum of topic weights * source multiplier).
   # 0.5 = at least one topic with weight 0.5 must hit.
-  min_score: 0.5
+  min_score: 0.55
 
 paths:
   # SQLite seen-store, lives inside the repo and is committed back so the
