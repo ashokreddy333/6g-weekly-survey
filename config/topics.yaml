@@ -87,7 +87,9 @@ topics:
       - "robot foundation models and vision-language-action models"
       - "world models and digital twins for robotics"
       - "sim-to-real transfer and robot learning"
-      - "industrial robotics, autonomous systems, and networked robotics"
+      - "industrial robotics"
+      - "autonomous systems"
+      - "networked robotics"
 
   # ---------- Ecosystem ----------
 
