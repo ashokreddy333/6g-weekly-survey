@@ -80,7 +80,7 @@ topics:
       - "beam management"
 
   # ---------- Higher layers & network ----------
- - name: Physical AI
+  - name: Physical AI
     weight: 1.0
     keywords:
       - "Physical AI and embodied AI"
